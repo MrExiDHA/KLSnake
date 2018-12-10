@@ -1,0 +1,93 @@
+﻿<Window x:Class="SnakeWpfClient.SnakeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SnakeWpfClient"
+        mc:Ignorable="d"
+        Title="SnakeWindow" SizeToContent="WidthAndHeight" d:DesignWidth="722" d:DesignHeight="506" 
+        Width="1000" MinHeight="{Binding MinHeight, ElementName=itemsControl}">
+
+    <Window.InputBindings>
+        <KeyBinding Key="Up" Command="{Binding Top}"/>
+        <KeyBinding Key="Left" Command="{Binding Left}"/>
+        <KeyBinding Key="Down" Command="{Binding Bottom}"/>
+        <KeyBinding Key="Right" Command="{Binding Right}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.25*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" BorderBrush="Black">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock Text="Players" FontSize="18"/>
+                <ItemsControl ItemsSource="{Binding Players}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Player}" FontSize="16"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+
+        </GroupBox>
+
+        <ItemsControl x:Name="itemsControl" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding ColorModel}" 
+                      Width="{Binding GridWidth}" Height="{Binding GridHeight}"
+                      MaxWidth="{Binding Width, RelativeSource={RelativeSource Self}}" 
+                      MaxHeight="{Binding Height, RelativeSource={RelativeSource Self}}" 
+                      MinWidth="{Binding Width, RelativeSource={RelativeSource Self}}" 
+                      MinHeight="{Binding Height, RelativeSource={RelativeSource Self}}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding Rows}" Columns="{Binding Columns}"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="{Binding Back}" BorderBrush="Black" BorderThickness="0.5"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Vertical"
+                    VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock FontSize="16" HorizontalAlignment="Center" Text="ROUND"/>
+            <TextBlock Text="{Binding Round}" HorizontalAlignment="Center" FontSize="16"/>
+            <TextBlock/>
+            <TextBlock FontSize="16" HorizontalAlignment="Center" Text="TOP SCORE"/>
+            <TextBlock Text="{Binding TopScore}" HorizontalAlignment="Center" FontSize="16"/>
+            <TextBlock/>
+            <TextBlock FontSize="16" HorizontalAlignment="Center" Text="MY SCORE"/>
+            <TextBlock Text="{Binding Score}" HorizontalAlignment="Center" FontSize="16"/>
+        </StackPanel>
+
+        <GroupBox Grid.Row="1" Grid.Column="2"
+                  VerticalAlignment="Center" HorizontalAlignment="Center"
+                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
+            <StackPanel Orientation="Vertical">
+                <Button HorizontalAlignment="Center" Width="45" Height="45" Command="{Binding Top}">Top</Button>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button HorizontalAlignment="Center" Width="45" Height="45" Command="{Binding Left}">Left</Button>
+                    <Button HorizontalAlignment="Center" Width="45" Height="45" Command="{Binding Bottom}">Bottom</Button>
+                    <Button HorizontalAlignment="Center" Width="45" Height="45" Command="{Binding Right}">Right</Button>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+    </Grid>
+</Window>
